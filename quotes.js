@@ -1,7 +1,18 @@
 const newQuoteButton = document.querySelector('#js-new-quote');
-const endpoint = 'https://api.whatdoestrumpthink.com/api/v1/quotes/random'
 newQuoteButton.addEventListener('click', getQuote);
+const endpoint = 'https://api.whatdoestrumpthink.com/api/v1/quotes/random'
 
-function getQuote() {
-  console.log("quote button was clicked");
+async function getQuote() {
+
+  try {
+    const response = await fetch(endpoint)
+    if (!response.ok) {
+      throw Error(response.statusText)
+    }
+    const json = await response.json();
+    console.log(json.message);
+  } catch (err) {
+    console.log(err)
+    alert('Failed to fetch new quote');
+  }
 }
